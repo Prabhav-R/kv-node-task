@@ -10,20 +10,25 @@ const {
 } = require("../validation/joiRequestValidation");
 
 // GET => /roles
-router.get("/", roleController.getAllRoles);
+router.get("/", authorize, roleController.getAllRoles);
 
 // POST => /roles
 router.post(
   "/",
-  // authorize,
+  authorize,
   validate(postRoleBodySchema),
   roleController.postRole
 );
 
 // PUT => /roles/id
-router.put("/:id", validate(editRoleBodySchema), roleController.editRole);
+router.put(
+  "/:id",
+  authorize,
+  validate(editRoleBodySchema),
+  roleController.editRole
+);
 
 // DELETE => /employees/id
-router.delete("/:id", roleController.deleteRole);
+router.delete("/:id", authorize, roleController.deleteRole);
 
 module.exports = router;

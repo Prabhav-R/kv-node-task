@@ -55,8 +55,15 @@ EmpDept.belongsTo(Department, {
 Role.belongsToMany(Employee, { through: EmployeeRole });
 Employee.belongsToMany(Role, { through: EmployeeRole });
 
-Employee.hasOne(Address);
-Address.belongsTo(Employee);
+Employee.hasOne(
+  Address
+  // { onDelete: "CASCADE" }
+);
+Address.belongsTo(Employee, {
+  // onDelete: "CASCADE",
+  // as: "Employee",
+  foreignKey: "employeeId",
+});
 
 sequelize
   .sync()

@@ -23,12 +23,13 @@ exports.login = async (req, res) => {
         req.body.password,
         emp.getDataValue("password")
       );
+
       if (isMatch) {
         const payload = {
           name: emp.getDataValue("name"),
           age: emp.getDataValue("age"),
         };
-        const token = jwt.sign(payload, key.jwtSecret, { expiresIn: "3600r" });
+        const token = jwt.sign(payload, key.jwtSecret, { expiresIn: "1h" });
 
         res.status(200).json({ idToken: "Bearer " + token });
       } else {

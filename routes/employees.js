@@ -15,7 +15,7 @@ const {
 const router = express.Router();
 
 // GET => /employees
-router.get("/", empController.getAllEmployees);
+router.get("/", authorize, empController.getAllEmployees);
 
 // GET => /employees/id
 router.get(
@@ -36,37 +36,42 @@ router.post(
 // PUT => /employees/id
 router.put(
   "/:id",
+  authorize,
   validate(editEmployeeBodySchema),
   empController.editEmployee
 );
 
 // DELETE => /employees/id
-router.delete("/:id", empController.deleteEmployee);
+router.delete("/:id", authorize, empController.deleteEmployee);
 
 // GET => /employees/id/departments
-router.get("/:id/departments", empController.getEmployeeDepartments);
+router.get("/:id/departments", authorize, empController.getEmployeeDepartments);
 
 // POST => /employees/id/departments
 router.post(
   "/:id/departments",
+  authorize,
   validate(postEmployeeDepartmentBodySchema),
   empController.postEmployeeDepartment
 );
 
 router.post(
   "/:id/roles",
+  authorize,
   validate(postEmployeeRoleBodySchema),
   roleController.postEmployeeRole
 );
 
 router.post(
   "/:id/address",
+  authorize,
   validate(postEmployeeAddressSchema),
   empController.postEmployeeAddress
 );
 
 router.put(
   "/:id/address",
+  authorize,
   validate(postEmployeeAddressSchema),
   empController.editEmployeeAddress
 );

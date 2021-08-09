@@ -1,11 +1,15 @@
 const { DataTypes } = require("sequelize");
-
+const Employee = require("../models/employees");
 const sequelize = require("../util/database");
 
 const Address = sequelize.define("address", {
   employeeId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    unique: true,
+    references: {
+      model: Employee,
+      key: "id",
+    },
   },
   housename: {
     type: DataTypes.STRING,
